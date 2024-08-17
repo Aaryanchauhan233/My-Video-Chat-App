@@ -1,0 +1,8 @@
+agora-token-builder==1.0.0
+asgiref==3.8.1
+Django==5.0.8
+sqlparse==0.5.1
+tzdata==2024.1
+
+# appId = 6fa585678f6a438eb1fb6b9c3a8ed1fe
+# appcertificate = ea16796ca5f747e08f86c5be11d9dc05

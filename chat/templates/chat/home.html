@@ -1,0 +1,58 @@
+{% extends 'chat/main.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+    <section id="form-container">
+        <img id="logo" src="{% static 'images/chat-icon.png' %}" alt="Chat Logo">
+
+        <div id="welcome-message">
+            <h1>Welcome to MyVdoChatApp</h1>
+            <p>A group video calling application for you!</p>
+        </div>
+
+        <form id="form">
+            <div class="form-field">
+                <input type="text" name="room" placeholder="Enter a room name..." required />
+            </div>
+
+            <div class="form-field">
+                <input type="text" name="username" placeholder="Enter your name..." required />
+            </div>
+
+            <div class="form-field">
+                <input type="submit" value="Join Stream" />
+            </div>
+        </form>
+    </section>
+</main>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('form');
+
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            const room = e.target.room.value.trim().toUpperCase();
+            const name = e.target.username.value.trim();
+
+            if (room && name) {
+                const response = await fetch(`/get_token/?channel=${room}`);
+                const data = await response.json();
+
+                sessionStorage.setItem('UID', data.uid);
+                sessionStorage.setItem('token', data.token);
+                sessionStorage.setItem('room', room);
+                sessionStorage.setItem('name', name);
+
+                window.location.href = '/room';
+            } else {
+                alert("Please enter both room name and username.");
+            }
+        };
+
+        form.addEventListener('submit', handleSubmit);
+    });
+</script>
+
+{% endblock content %}
